@@ -339,7 +339,8 @@ public class XUnitAssertionCodeFixProvider : CodeFixProvider
         var symbol = semanticModel.GetSymbolInfo(memberAccessExpressionSyntax).Symbol;
 
         if (symbol is IMethodSymbol { Parameters.Length: 2 } methodSymbol &&
-            methodSymbol.Parameters[0].Type.Name == "IEnumerable" && methodSymbol.Parameters[1].Type.Name == "Predicate")
+            methodSymbol.Parameters[0].Type.Name == "IEnumerable" && 
+            (methodSymbol.Parameters[1].Type.Name == "Predicate" || methodSymbol.Parameters[1].Type.Name == "Func"))
         {
             // Swap them - This overload is the other way around to the other ones.
             (actual, expected) = (expected, actual);
