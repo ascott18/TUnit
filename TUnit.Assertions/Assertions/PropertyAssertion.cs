@@ -92,7 +92,9 @@ public class PropertyAssertion<TObject, TProperty>
 public class PropertyAssertionResult<TObject> : IAssertionSource<TObject>
 {
     public AssertionContext<TObject> Context { get; }
+#if NETSTANDARD
     public AssertionContext UntypedContext => Context;
+#endif
     private readonly Assertion<object?> _propertyAssertion;
 
     internal PropertyAssertionResult(AssertionContext<TObject> parentContext, Assertion<object?> propertyAssertion)

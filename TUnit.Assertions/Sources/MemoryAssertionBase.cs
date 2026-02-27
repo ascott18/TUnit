@@ -22,7 +22,9 @@ public abstract class MemoryAssertionBase<TMemory, TItem> : Assertion<TMemory>, 
     /// </summary>
     AssertionContext<TMemory> IAssertionSource<TMemory>.Context => Context;
 
+#if NETSTANDARD
     public AssertionContext UntypedContext => Context;
+#endif
 
     /// <summary>
     /// Factory function to create an adapter from the memory value.

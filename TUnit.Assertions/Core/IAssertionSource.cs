@@ -39,6 +39,10 @@ public interface IAssertionSource<TValue> : ICovariantAssertionSource<TValue>
     /// </summary>
     AssertionContext<TValue> Context { get; }
 
+#if NET8_0_OR_GREATER
+    AssertionContext ICovariantAssertionSource<TValue>.UntypedContext => Context;
+#endif
+
     /// <summary>
     /// Asserts that the value is assignment-compatible with the specified type.
     /// </summary>

@@ -21,7 +21,9 @@ public abstract class CollectionAssertionBase<TCollection, TItem> : Assertion<TC
     /// </summary>
     AssertionContext<TCollection> IAssertionSource<TCollection>.Context => Context;
 
+#if NETSTANDARD
     public AssertionContext UntypedContext => Context;
+#endif
 
     protected CollectionAssertionBase(AssertionContext<TCollection> context)
         : base(context)

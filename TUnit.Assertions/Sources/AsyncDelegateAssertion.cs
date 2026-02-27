@@ -16,7 +16,9 @@ namespace TUnit.Assertions.Sources;
 public class AsyncDelegateAssertion : IAssertionSource<object?>, IDelegateAssertionSource<object?>, IAssertionSource<Task>
 {
     public AssertionContext<object?> Context { get; }
+#if NETSTANDARD
     public AssertionContext UntypedContext => Context;
+#endif
     AssertionContext<Task> IAssertionSource<Task>.Context => TaskContext;
 
     private AssertionContext<Task> TaskContext { get; }

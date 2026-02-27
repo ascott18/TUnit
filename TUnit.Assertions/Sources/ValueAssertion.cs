@@ -12,7 +12,9 @@ namespace TUnit.Assertions.Sources;
 public class ValueAssertion<TValue> : IAssertionSource<TValue>
 {
     public AssertionContext<TValue> Context { get; }
+#if NETSTANDARD
     public AssertionContext UntypedContext => Context;
+#endif
 
     public ValueAssertion(TValue? value, string? expression)
     {
