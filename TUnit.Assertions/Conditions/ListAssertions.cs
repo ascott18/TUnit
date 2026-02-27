@@ -69,6 +69,9 @@ public class ListItemAtSource<TList, TItem> : IAssertionSource<TItem>
 
     public AssertionContext<TItem> Context { get; }
 
+    /// <inheritdoc />
+    public AssertionContext UntypedContext => Context;
+
     public ListItemAtSource(AssertionContext<TList> listContext, int index)
     {
         _listContext = listContext;
@@ -170,6 +173,9 @@ public class ListLastItemSource<TList, TItem> : IAssertionSource<TItem>
     private readonly AssertionContext<TList> _listContext;
 
     public AssertionContext<TItem> Context { get; }
+
+    /// <inheritdoc />
+    public AssertionContext UntypedContext => Context;
 
     public ListLastItemSource(AssertionContext<TList> listContext)
     {

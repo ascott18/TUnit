@@ -4,18 +4,34 @@ namespace TUnit.Assertions.Core;
 
 /// <summary>
 /// Non-generic base interface for all assertion sources.
-/// Used for extension methods that need single type parameter (like IsTypeOf).
 /// </summary>
 public interface IAssertionSource
 {
 }
 
 /// <summary>
+/// Covariant interface for assertion sources, enabling variance-safe usage.
+/// Because <typeparamref name="TDerived"/> is covariant (<c>out</c>), an
+/// <c>ICovariantAssertionSource&lt;Dog&gt;</c> can be used wherever
+/// <c>ICovariantAssertionSource&lt;Animal&gt;</c> is expected.
+/// </summary>
+/// <typeparam name="TDerived">The covariant type of value being asserted</typeparam>
+public interface ICovariantAssertionSource<out TDerived> : IAssertionSource
+{
+    /// <summary>
+    /// The non-generic assertion context, providing access to the expression builder,
+    /// evaluation timing, and type-erased value access via <see cref="AssertionContext.MapFromObject{TNew}"/>.
+    /// </summary>
+    AssertionContext UntypedContext { get; }
+}
+
+/// <summary>
 /// Common interface for all assertion sources (assertions and continuations).
 /// Extension methods target this interface, eliminating duplication.
+/// Extends <see cref="ICovariantAssertionSource{TDerived}"/> to enable covariant type narrowing.
 /// </summary>
 /// <typeparam name="TValue">The type of value being asserted</typeparam>
-public interface IAssertionSource<TValue> : IAssertionSource
+public interface IAssertionSource<TValue> : ICovariantAssertionSource<TValue>
 {
     /// <summary>
     /// The assertion context shared by all assertions in this chain.

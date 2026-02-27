@@ -13,6 +13,9 @@ public class LengthWrapper : IAssertionSource<string>
 {
     private readonly AssertionContext<string> _context;
 
+    /// <inheritdoc />
+    public AssertionContext UntypedContext => _context;
+
     public LengthWrapper(AssertionContext<string> context)
     {
         _context = context;

@@ -22,6 +22,8 @@ public abstract class MemoryAssertionBase<TMemory, TItem> : Assertion<TMemory>, 
     /// </summary>
     AssertionContext<TMemory> IAssertionSource<TMemory>.Context => Context;
 
+    public AssertionContext UntypedContext => Context;
+
     /// <summary>
     /// Factory function to create an adapter from the memory value.
     /// </summary>

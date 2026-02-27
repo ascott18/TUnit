@@ -225,6 +225,9 @@ public class WhenParsedIntoAssertion<[DynamicallyAccessedMembers(DynamicallyAcce
 
     AssertionContext<T> IAssertionSource<T>.Context => Context;
 
+    /// <inheritdoc />
+    public AssertionContext UntypedContext => Context;
+
     public WhenParsedIntoAssertion(
         AssertionContext<string> stringContext,
         IFormatProvider? formatProvider = null)

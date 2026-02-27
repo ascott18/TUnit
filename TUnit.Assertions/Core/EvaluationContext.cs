@@ -6,7 +6,7 @@ namespace TUnit.Assertions.Core;
 /// Shared by all assertions in a chain - evaluates once, caches result.
 /// </summary>
 /// <typeparam name="TValue">The type of value being evaluated</typeparam>
-public sealed class EvaluationContext<TValue>
+public sealed class EvaluationContext<TValue> : EvaluationContext
 {
     private readonly Func<Task<(TValue?, Exception?)>>? _evaluator;
     private TValue? _value;
@@ -146,5 +146,19 @@ public sealed class EvaluationContext<TValue>
     /// Gets the timing information for this evaluation.
     /// Only meaningful after evaluation has occurred.
     /// </summary>
-    public (DateTimeOffset Start, DateTimeOffset End) GetTiming() => (_startTime, _endTime);
+    public override (DateTimeOffset Start, DateTimeOffset End) GetTiming() => (_startTime, _endTime);
+
+    /// <inheritdoc />
+    public override async Task<(object? Value, Exception? Exception)> GetAsObjectAsync()
+    {
+        var (value, exception) = await GetAsync();
+        return (value, exception);
+    }
+
+    /// <inheritdoc />
+    public override async Task<(object? Value, Exception? Exception)> ReevaluateAsObjectAsync()
+    {
+        var (value, exception) = await ReevaluateAsync();
+        return (value, exception);
+    }
 }

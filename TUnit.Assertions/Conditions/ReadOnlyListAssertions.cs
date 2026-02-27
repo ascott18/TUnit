@@ -70,6 +70,7 @@ public class ReadOnlyListItemAtSource<TList, TItem> : IAssertionSource<TItem>
     private readonly int _index;
 
     public AssertionContext<TItem> Context { get; }
+    public AssertionContext UntypedContext => Context;
 
     public ReadOnlyListItemAtSource(AssertionContext<TList> listContext, int index)
     {
@@ -172,6 +173,7 @@ public class ReadOnlyListLastItemSource<TList, TItem> : IAssertionSource<TItem>
     private readonly AssertionContext<TList> _listContext;
 
     public AssertionContext<TItem> Context { get; }
+    public AssertionContext UntypedContext => Context;
 
     public ReadOnlyListLastItemSource(AssertionContext<TList> listContext)
     {

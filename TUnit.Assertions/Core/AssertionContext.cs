@@ -8,35 +8,32 @@ namespace TUnit.Assertions.Core;
 /// All assertions in a chain share the same AssertionContext instance.
 /// </summary>
 /// <typeparam name="TValue">The type of value being asserted</typeparam>
-public sealed class AssertionContext<TValue>
+public sealed class AssertionContext<TValue> : AssertionContext
 {
     /// <summary>
     /// Handles lazy evaluation, caching, and exception capture for the source value.
     /// </summary>
     public EvaluationContext<TValue> Evaluation { get; }
 
-    /// <summary>
-    /// Builds the assertion chain expression for error messages.
-    /// Mutated as assertions are chained together.
-    /// </summary>
-    public StringBuilder ExpressionBuilder { get; }
+    /// <inheritdoc />
+    public override EvaluationContext EvaluationBase => Evaluation;
 
     /// <summary>
     /// Creates a new assertion context with the given evaluation context and expression builder.
     /// </summary>
     public AssertionContext(EvaluationContext<TValue> evaluation, StringBuilder expressionBuilder)
+        : base(expressionBuilder)
     {
         Evaluation = evaluation ?? throw new ArgumentNullException(nameof(evaluation));
-        ExpressionBuilder = expressionBuilder ?? throw new ArgumentNullException(nameof(expressionBuilder));
     }
 
     /// <summary>
     /// Creates a new assertion context for immediate values (no evaluation needed).
     /// </summary>
     public AssertionContext(TValue? value, StringBuilder expressionBuilder)
+        : base(expressionBuilder)
     {
         Evaluation = new EvaluationContext<TValue>(value);
-        ExpressionBuilder = expressionBuilder ?? throw new ArgumentNullException(nameof(expressionBuilder));
     }
 
     /// <summary>
@@ -107,15 +104,6 @@ public sealed class AssertionContext<TValue>
     }
 
     /// <summary>
-    /// Gets the timing information for this evaluation.
-    /// Only meaningful after evaluation has occurred.
-    /// </summary>
-    public (DateTimeOffset Start, DateTimeOffset End) GetTiming()
-    {
-        return Evaluation.GetTiming();
-    }
-
-    /// <summary>
     /// Pending assertion to link with when the next assertion is constructed.
     /// Set by AndContinuation/OrContinuation, consumed by Assertion constructor.
     /// </summary>
@@ -125,12 +113,6 @@ public sealed class AssertionContext<TValue>
     /// The type of combiner (And/Or) for the pending link.
     /// </summary>
     internal CombinerType? PendingLinkType { get; private set; }
-
-    /// <summary>
-    /// Pre-work to execute before evaluating assertions in this context.
-    /// Used for cross-type assertion chaining (e.g., string assertions before WhenParsedInto&lt;int&gt;).
-    /// </summary>
-    internal Func<Task>? PendingPreWork { get; set; }
 
     /// <summary>
     /// Sets the pending link state for the next assertion to consume.
@@ -152,6 +134,18 @@ public sealed class AssertionContext<TValue>
         PendingLinkPrevious = null;
         PendingLinkType = null;
         return result;
+    }
+
+    /// <inheritdoc />
+    internal override Func<Task>? ConsumeAndGetPendingWork()
+    {
+        var (pendingAssertion, _) = ConsumePendingLink();
+        if (pendingAssertion != null)
+        {
+            return async () => await pendingAssertion.ExecuteCoreAsync();
+        }
+
+        return null;
     }
 
     /// <summary>

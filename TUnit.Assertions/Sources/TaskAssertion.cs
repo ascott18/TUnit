@@ -15,6 +15,7 @@ namespace TUnit.Assertions.Sources;
 public class TaskAssertion<TValue> : IAssertionSource<TValue>, IDelegateAssertionSource<TValue>, IAssertionSource<Task<TValue?>>
 {
     public AssertionContext<TValue> Context { get; }
+    public AssertionContext UntypedContext => Context;
     AssertionContext<Task<TValue?>> IAssertionSource<Task<TValue?>>.Context => TaskContext;
 
     private AssertionContext<Task<TValue?>> TaskContext { get; }

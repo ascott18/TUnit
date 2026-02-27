@@ -13,6 +13,7 @@ namespace TUnit.Assertions.Sources;
 public class FuncAssertion<TValue> : IAssertionSource<TValue>, IDelegateAssertionSource<TValue>
 {
     public AssertionContext<TValue> Context { get; }
+    public AssertionContext UntypedContext => Context;
 
     public FuncAssertion(Func<TValue?> func, string? expression)
     {

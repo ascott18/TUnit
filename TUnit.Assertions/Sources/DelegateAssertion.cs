@@ -14,6 +14,7 @@ namespace TUnit.Assertions.Sources;
 public class DelegateAssertion : IAssertionSource<object?>, IDelegateAssertionSource<object?>
 {
     public AssertionContext<object?> Context { get; }
+    public AssertionContext UntypedContext => Context;
     internal Action Action { get; }
 
     public DelegateAssertion(Action action, string? expression)

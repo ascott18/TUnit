@@ -23,6 +23,8 @@ public class CountWrapper<TCollection, TItem> : IAssertionSource<TCollection>
 
     AssertionContext<TCollection> IAssertionSource<TCollection>.Context => _context;
 
+    public AssertionContext UntypedContext => _context;
+
     /// <summary>
     /// Not supported on CountWrapper - use IsTypeOf on the assertion source before calling HasCount().
     /// </summary>

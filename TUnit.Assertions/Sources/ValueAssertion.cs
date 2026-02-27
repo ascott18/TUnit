@@ -12,6 +12,7 @@ namespace TUnit.Assertions.Sources;
 public class ValueAssertion<TValue> : IAssertionSource<TValue>
 {
     public AssertionContext<TValue> Context { get; }
+    public AssertionContext UntypedContext => Context;
 
     public ValueAssertion(TValue? value, string? expression)
     {
@@ -22,9 +23,10 @@ public class ValueAssertion<TValue> : IAssertionSource<TValue>
     }
 
     /// <summary>
-    /// Protected constructor for derived classes that need to pass an existing context.
+    /// Constructor for derived classes or type-transforming operations (e.g., AsType).
+    /// Creates a ValueAssertion from an existing context.
     /// </summary>
-    protected ValueAssertion(AssertionContext<TValue> context)
+    public ValueAssertion(AssertionContext<TValue> context)
     {
         Context = context ?? throw new ArgumentNullException(nameof(context));
     }

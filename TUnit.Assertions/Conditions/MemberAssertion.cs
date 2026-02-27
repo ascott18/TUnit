@@ -141,6 +141,7 @@ internal class TypeErasedAssertion<T> : Assertion<object?>
 public class AssertionSourceAdapter<T> : IAssertionSource<T>
 {
     public AssertionContext<T> Context { get; }
+    public AssertionContext UntypedContext => Context;
 
     public AssertionSourceAdapter(AssertionContext<T> context)
     {
