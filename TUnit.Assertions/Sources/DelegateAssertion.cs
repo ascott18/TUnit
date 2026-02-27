@@ -15,7 +15,7 @@ public class DelegateAssertion : IAssertionSource<object?>, IDelegateAssertionSo
 {
     public AssertionContext<object?> Context { get; }
 #if NETSTANDARD
-    public AssertionContext UntypedContext => Context;
+    AssertionContext ICovariantAssertionSource<object?>.Context => Context;
 #endif
     internal Action Action { get; }
 

@@ -38,7 +38,7 @@ public abstract class AsyncEnumerableAssertionBase<TItem> : Assertion<IAsyncEnum
     public new AssertionContext<IAsyncEnumerable<TItem>> Context => base.Context;
 
 #if NETSTANDARD
-    public AssertionContext UntypedContext => Context;
+    AssertionContext ICovariantAssertionSource<IAsyncEnumerable<TItem>>.Context => Context;
 #endif
 
     protected override string GetExpectation() => "async enumerable assertion";

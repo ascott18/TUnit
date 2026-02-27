@@ -22,7 +22,7 @@ public interface ICovariantAssertionSource<out TDerived> : IAssertionSource
     /// The non-generic assertion context, providing access to the expression builder,
     /// evaluation timing, and type-erased value access via <see cref="AssertionContext.MapFromObject{TNew}"/>.
     /// </summary>
-    AssertionContext UntypedContext { get; }
+    AssertionContext Context { get; }
 }
 
 /// <summary>
@@ -37,10 +37,10 @@ public interface IAssertionSource<TValue> : ICovariantAssertionSource<TValue>
     /// The assertion context shared by all assertions in this chain.
     /// Contains the evaluation context (value, timing, exceptions) and expression builder (error messages).
     /// </summary>
-    AssertionContext<TValue> Context { get; }
+    new AssertionContext<TValue> Context { get; }
 
 #if NET8_0_OR_GREATER
-    AssertionContext ICovariantAssertionSource<TValue>.UntypedContext => Context;
+    AssertionContext ICovariantAssertionSource<TValue>.Context => Context;
 #endif
 
     /// <summary>

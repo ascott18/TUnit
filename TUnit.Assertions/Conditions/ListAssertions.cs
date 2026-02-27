@@ -69,9 +69,8 @@ public class ListItemAtSource<TList, TItem> : IAssertionSource<TItem>
 
     public AssertionContext<TItem> Context { get; }
 
-    /// <inheritdoc />
 #if NETSTANDARD
-    public AssertionContext UntypedContext => Context;
+    AssertionContext ICovariantAssertionSource<TItem>.Context => Context;
 #endif
 
     public ListItemAtSource(AssertionContext<TList> listContext, int index)
@@ -176,9 +175,8 @@ public class ListLastItemSource<TList, TItem> : IAssertionSource<TItem>
 
     public AssertionContext<TItem> Context { get; }
 
-    /// <inheritdoc />
 #if NETSTANDARD
-    public AssertionContext UntypedContext => Context;
+    AssertionContext ICovariantAssertionSource<TItem>.Context => Context;
 #endif
 
     public ListLastItemSource(AssertionContext<TList> listContext)

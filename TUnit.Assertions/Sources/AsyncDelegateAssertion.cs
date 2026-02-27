@@ -17,7 +17,8 @@ public class AsyncDelegateAssertion : IAssertionSource<object?>, IDelegateAssert
 {
     public AssertionContext<object?> Context { get; }
 #if NETSTANDARD
-    public AssertionContext UntypedContext => Context;
+    AssertionContext ICovariantAssertionSource<object?>.Context => Context;
+    AssertionContext ICovariantAssertionSource<Task>.Context => TaskContext;
 #endif
     AssertionContext<Task> IAssertionSource<Task>.Context => TaskContext;
 

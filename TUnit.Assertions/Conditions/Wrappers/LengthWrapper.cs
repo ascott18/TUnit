@@ -13,15 +13,15 @@ public class LengthWrapper : IAssertionSource<string>
 {
     private readonly AssertionContext<string> _context;
 
-    /// <inheritdoc />
-    public AssertionContext UntypedContext => _context;
-
     public LengthWrapper(AssertionContext<string> context)
     {
         _context = context;
     }
 
     AssertionContext<string> IAssertionSource<string>.Context => _context;
+#if NETSTANDARD
+    AssertionContext ICovariantAssertionSource<string>.Context => _context;
+#endif
 
     /// <summary>
     /// Not supported on LengthWrapper - use IsTypeOf on the assertion source before calling HasLength().

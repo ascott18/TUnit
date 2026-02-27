@@ -23,7 +23,7 @@ public abstract class MemoryAssertionBase<TMemory, TItem> : Assertion<TMemory>, 
     AssertionContext<TMemory> IAssertionSource<TMemory>.Context => Context;
 
 #if NETSTANDARD
-    public AssertionContext UntypedContext => Context;
+    AssertionContext ICovariantAssertionSource<TValue>.Context => Context;
 #endif
 
     /// <summary>

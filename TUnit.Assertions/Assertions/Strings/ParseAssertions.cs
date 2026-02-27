@@ -225,9 +225,8 @@ public class WhenParsedIntoAssertion<[DynamicallyAccessedMembers(DynamicallyAcce
 
     AssertionContext<T> IAssertionSource<T>.Context => Context;
 
-    /// <inheritdoc />
 #if NETSTANDARD
-    public AssertionContext UntypedContext => Context;
+    AssertionContext ICovariantAssertionSource<T>.Context => Context;
 #endif
 
     public WhenParsedIntoAssertion(

@@ -93,7 +93,7 @@ public class PropertyAssertionResult<TObject> : IAssertionSource<TObject>
 {
     public AssertionContext<TObject> Context { get; }
 #if NETSTANDARD
-    public AssertionContext UntypedContext => Context;
+    AssertionContext ICovariantAssertionSource<TObject>.Context => Context;
 #endif
     private readonly Assertion<object?> _propertyAssertion;
 

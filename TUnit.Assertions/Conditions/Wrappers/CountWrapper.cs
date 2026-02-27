@@ -23,7 +23,9 @@ public class CountWrapper<TCollection, TItem> : IAssertionSource<TCollection>
 
     AssertionContext<TCollection> IAssertionSource<TCollection>.Context => _context;
 
-    public AssertionContext UntypedContext => _context;
+#if NETSTANDARD
+    AssertionContext ICovariantAssertionSource<TCollection>.Context => _context;
+#endif
 
     /// <summary>
     /// Not supported on CountWrapper - use IsTypeOf on the assertion source before calling HasCount().

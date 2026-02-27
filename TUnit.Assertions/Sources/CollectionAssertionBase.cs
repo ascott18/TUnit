@@ -22,7 +22,7 @@ public abstract class CollectionAssertionBase<TCollection, TItem> : Assertion<TC
     AssertionContext<TCollection> IAssertionSource<TCollection>.Context => Context;
 
 #if NETSTANDARD
-    public AssertionContext UntypedContext => Context;
+    AssertionContext ICovariantAssertionSource<TCollection>.Context => Context;
 #endif
 
     protected CollectionAssertionBase(AssertionContext<TCollection> context)

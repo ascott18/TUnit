@@ -14,7 +14,7 @@ public class FuncAssertion<TValue> : IAssertionSource<TValue>, IDelegateAssertio
 {
     public AssertionContext<TValue> Context { get; }
 #if NETSTANDARD
-    public AssertionContext UntypedContext => Context;
+    AssertionContext ICovariantAssertionSource<TValue>.Context => Context;
 #endif
 
     public FuncAssertion(Func<TValue?> func, string? expression)

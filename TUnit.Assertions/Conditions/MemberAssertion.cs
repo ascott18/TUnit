@@ -141,8 +141,9 @@ internal class TypeErasedAssertion<T> : Assertion<object?>
 public class AssertionSourceAdapter<T> : IAssertionSource<T>
 {
     public AssertionContext<T> Context { get; }
+
 #if NETSTANDARD
-    public AssertionContext UntypedContext => Context;
+    AssertionContext ICovariantAssertionSource<T>.Context => Context;
 #endif
 
     public AssertionSourceAdapter(AssertionContext<T> context)

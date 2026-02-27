@@ -53,7 +53,7 @@ public static class CovariantAnimalAssertionExtensions
         this ICovariantAssertionSource<CovariantAssertionSourceTests.Animal> source,
         string expectedName)
     {
-        var context = source.UntypedContext.Map<CovariantAssertionSourceTests.Animal>();
+        var context = source.Context.Map<CovariantAssertionSourceTests.Animal>();
         context.ExpressionBuilder.Append($".IsAnimalWithName(\"{expectedName}\")");
         return new AnimalNameAssertion(context, expectedName);
     }

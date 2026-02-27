@@ -13,7 +13,7 @@ public class ValueAssertion<TValue> : IAssertionSource<TValue>
 {
     public AssertionContext<TValue> Context { get; }
 #if NETSTANDARD
-    public AssertionContext UntypedContext => Context;
+    AssertionContext ICovariantAssertionSource<TValue>.Context => Context;
 #endif
 
     public ValueAssertion(TValue? value, string? expression)

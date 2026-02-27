@@ -71,7 +71,7 @@ public class ReadOnlyListItemAtSource<TList, TItem> : IAssertionSource<TItem>
 
     public AssertionContext<TItem> Context { get; }
 #if NETSTANDARD
-    public AssertionContext UntypedContext => Context;
+    AssertionContext ICovariantAssertionSource<TItem>.Context => Context;
 #endif
 
     public ReadOnlyListItemAtSource(AssertionContext<TList> listContext, int index)
@@ -176,7 +176,7 @@ public class ReadOnlyListLastItemSource<TList, TItem> : IAssertionSource<TItem>
 
     public AssertionContext<TItem> Context { get; }
 #if NETSTANDARD
-    public AssertionContext UntypedContext => Context;
+    AssertionContext ICovariantAssertionSource<TItem>.Context => Context;
 #endif
 
     public ReadOnlyListLastItemSource(AssertionContext<TList> listContext)
